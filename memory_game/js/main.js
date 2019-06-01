@@ -30,15 +30,27 @@ function checkForMatch() {
 		}
 }
 
-var flipCard = function(cardId) {
-	console.log("User flipped " + cards[cardId].rank);
+function createBoard() {
+	for (let i = 0; i < cards.length; i++) {
+		const cardElement = document.createElement('img');
+		cardElement.setAttribute('src', "images/back.png");
+		cardElement.setAttribute('data-id', i);
+		cardElement.addEventListener("click", flipCard);
+		document.getElementById("game-board").appendChild(cardElement);
+	}
+}
+
+var flipCard = function() {
+	var cardId = this.getAttribute('data-id');
+	console.log("User flipped " + cards[cardId].rank + " of " + cards[cardId].suite);
 	cardsInPlay.push(cards[cardId].rank);
-	console.log(cards[cardId].cardImage);
-	console.log(cards[cardId].suite)
+//	console.log(cards[cardId].cardImage);
+//	console.log(cards[cardId].suite)
+	this.setAttribute('src', cards[cardId].cardImage);
 	if (cardsInPlay.length === 2) {
 	checkForMatch();
 	} 
 }
 
-flipCard(0);
-flipCard(2);
+createBoard();
+
